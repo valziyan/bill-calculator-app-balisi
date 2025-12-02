@@ -14,7 +14,7 @@
         <li><a href="calculator_page.html">Calculator</a></li>
         <li><a href="results_page.html">Results</a></li>
         <li><a href="profile_page.html">Profile</a></li>
-        <li><a href="login.html">Logout</a></li>
+        <li><a href="#" onclick="handleLogout(); return false;">Logout</a></li>
     </ul>
 
     <div class="container">
@@ -41,6 +41,37 @@
             </a>
         </div>
     </div>
+
+    <!-- Supabase CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        // Check authentication on page load
+        document.addEventListener('DOMContentLoaded', async () => {
+            const session = await initAuth();
+            if (session) {
+                const user = await getCurrentUser();
+                if (user) {
+                    // Update welcome message with user name if available
+                    const welcomeText = document.querySelector('.welcome-text');
+                    const userName = user.user_metadata?.full_name || user.email;
+                    if (welcomeText) {
+                        welcomeText.textContent = `Welcome back, ${userName}! Manage your electricity bill calculations.`;
+                    }
+                }
+            }
+        });
+
+        async function handleLogout() {
+            const success = await signOut();
+            if (success) {
+                window.location.href = 'login.html';
+            } else {
+                alert('Error logging out. Please try again.');
+            }
+        }
+    </script>
 
 </body>
 </html>

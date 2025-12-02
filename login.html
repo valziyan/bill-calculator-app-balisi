@@ -41,12 +41,61 @@
             </p>
         </div>
 
+        <!-- Supabase CDN -->
+        <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+        <script src="js/supabase-config.js"></script>
         <script>
-            function handleLogin() {
-                // This will be connected to Supabase in the next phase
-                alert("Login functionality will be connected to Supabase");
-                // For now, redirect to dashboard
-                window.location.href = "user_dashboard.html";
+            // Redirect if already logged in
+            document.addEventListener("DOMContentLoaded", async () => {
+                await redirectIfAuthenticated();
+            });
+
+            async function handleLogin() {
+                const email = document.getElementById("email").value;
+                const password = document.getElementById("password").value;
+
+                if (!email || !password) {
+                    alert("Please fill in all fields!");
+                    return;
+                }
+
+                // Show loading state
+                const submitBtn = document.querySelector(
+                    'input[type="submit"]'
+                );
+                const originalValue = submitBtn.value;
+                submitBtn.value = "Logging in...";
+                submitBtn.disabled = true;
+
+                try {
+                    const { data, error } =
+                        await supabaseClient.auth.signInWithPassword({
+                            email: email,
+                            password: password,
+                        });
+
+                    if (error) {
+                        alert("Login failed: " + error.message);
+                        submitBtn.value = originalValue;
+                        submitBtn.disabled = false;
+                        return;
+                    }
+
+                    // Success - redirect to dashboard
+                    window.location.href = "user_dashboard.html";
+                } catch (error) {
+                    alert("An error occurred: " + error.message);
+                    submitBtn.value = originalValue;
+                    submitBtn.disabled = false;
+                }
+            }
+
+            // Redirect if authenticated
+            async function redirectIfAuthenticated() {
+                const session = await checkAuth();
+                if (session) {
+                    window.location.href = "user_dashboard.html";
+                }
             }
         </script>
     </body>

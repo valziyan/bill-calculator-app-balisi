@@ -14,7 +14,7 @@
         <li><a href="calculator_page.html">Calculator</a></li>
         <li><a href="results_page.html">Results</a></li>
         <li><a href="profile_page.html">Profile</a></li>
-        <li><a href="login.html">Logout</a></li>
+        <li><a href="#" onclick="handleLogout(); return false;">Logout</a></li>
     </ul>
 
     <div class="container">
@@ -42,10 +42,82 @@
         </div>
     </div>
 
+    <!-- Supabase CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/auth.js"></script>
     <script>
-        // This page can display results stored in localStorage or from the calculator
-        // For now, it shows the table structure ready for Supabase integration
-        // When connected to Supabase, you can fetch and display all calculations here
+        // Check authentication on page load
+        document.addEventListener('DOMContentLoaded', async () => {
+            const session = await initAuth();
+            if (session) {
+                await loadCalculations();
+            }
+        });
+
+        async function loadCalculations() {
+            const user = await getCurrentUser();
+            if (!user) {
+                return;
+            }
+
+            try {
+                const { data, error } = await supabaseClient
+                    .from('calculations')
+                    .select('*')
+                    .eq('user_id', user.id)
+                    .order('created_at', { ascending: false });
+
+                if (error) {
+                    console.error('Error loading calculations:', error);
+                    alert('Error loading calculations: ' + error.message);
+                    return;
+                }
+
+                const table = document.getElementById("myTable");
+                const tbody = table.querySelector('tbody');
+                
+                // Clear existing rows (except empty message)
+                tbody.innerHTML = '';
+
+                if (data && data.length > 0) {
+                    // Add each calculation as a row
+                    data.forEach(calc => {
+                        var row = tbody.insertRow();
+                        
+                        var cellMonth = row.insertCell(0);
+                        var cellPowerConsumption = row.insertCell(1);
+                        var cellCostPerKwh = row.insertCell(2);
+                        var cellResult = row.insertCell(3);
+
+                        cellMonth.innerHTML = calc.month;
+                        cellPowerConsumption.innerHTML = parseFloat(calc.power_consumption).toFixed(2);
+                        cellCostPerKwh.innerHTML = "₱ " + parseFloat(calc.cost_per_kwh).toFixed(2);
+                        cellResult.innerHTML = "₱ " + parseFloat(calc.result).toFixed(2);
+                    });
+                } else {
+                    // Show empty message
+                    var emptyRow = tbody.insertRow();
+                    emptyRow.className = 'empty-row';
+                    var emptyCell = emptyRow.insertCell(0);
+                    emptyCell.colSpan = 4;
+                    emptyCell.className = 'empty-message';
+                    emptyCell.innerHTML = 'No calculations yet. <a href="calculator_page.html">Calculate your first bill</a>';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error loading calculations: ' + error.message);
+            }
+        }
+
+        async function handleLogout() {
+            const success = await signOut();
+            if (success) {
+                window.location.href = 'login.html';
+            } else {
+                alert('Error logging out. Please try again.');
+            }
+        }
     </script>
 
 </body>
