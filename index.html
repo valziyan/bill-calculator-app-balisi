@@ -1,35 +1,49 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" type="text/css" href="css/style.css">
-	<title>Homepage</title>
-</head>
-<body>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" type="text/css" href="css/style.css" />
+        <title>Homepage - Electric Bill Calculator</title>
+    </head>
+    <body>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="register.html">Register</a></li>
+            <li><a href="login.html">Login</a></li>
+        </ul>
 
-<ul>
-  	<li><a href="#home">Home</a></li>
-  	<li><a href="#news">Register</a></li>
-  	<li><a href="#contact">Login</a></li>
-</ul>
+        <div class="container">
+            <div class="hero-section">
+                <h1>Electric Bill Calculator</h1>
+                <p class="hero-description">
+                    Calculate your electricity bills quickly and easily. Track
+                    your power consumption and costs.
+                </p>
+            </div>
 
+            <div class="home-actions">
+                <a href="login.html" class="btn-primary">Login</a>
+                <a href="register.html" class="btn-secondary">Register</a>
+            </div>
 
-<div class="loginform">
-	<h3>Please login</h3>
-	<form action="/action_page.php" class="loginform">
-	  	<label for="email">Email</label>
-	  	<input type="text" id="email" name="email" placeholder="Your email.">
-
-	  	<label for="password">Password</label>
-	  	<input type="text" id="password" name="password" placeholder="Enter your password.">
-
-	  
-	  	<input type="submit" value="Login">
-	</form>
-</div>
-
-
-
-</body>
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Quick Calculation</h3>
+                    <p>Calculate your electricity bill in seconds</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Track History</h3>
+                    <p>View all your previous calculations</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💾</div>
+                    <h3>Save Data</h3>
+                    <p>Your data will be saved securely</p>
+                </div>
+            </div>
+        </div>
+    </body>
 </html>

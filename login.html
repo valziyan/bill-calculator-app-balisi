@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" type="text/css" href="css/style.css" />
+        <title>Login</title>
+    </head>
+    <body>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="register.html">Register</a></li>
+            <li><a href="login.html">Login</a></li>
+        </ul>
+
+        <div class="loginform">
+            <h2>Please Login</h2>
+            <form onsubmit="event.preventDefault(); handleLogin();">
+                <label for="email">Email</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Your email"
+                    required
+                />
+
+                <label for="password">Password</label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Enter your password"
+                    required
+                />
+
+                <input type="submit" value="Login" />
+            </form>
+            <p class="form-footer">
+                Don't have an account? <a href="register.html">Register here</a>
+            </p>
+        </div>
+
+        <script>
+            function handleLogin() {
+                // This will be connected to Supabase in the next phase
+                alert("Login functionality will be connected to Supabase");
+                // For now, redirect to dashboard
+                window.location.href = "user_dashboard.html";
+            }
+        </script>
+    </body>
+</html>

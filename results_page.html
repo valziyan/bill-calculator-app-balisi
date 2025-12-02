@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <title>Results</title>
+</head>
+<body>
+
+    <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="user_dashboard.html">Dashboard</a></li>
+        <li><a href="calculator_page.html">Calculator</a></li>
+        <li><a href="results_page.html">Results</a></li>
+        <li><a href="profile_page.html">Profile</a></li>
+        <li><a href="login.html">Logout</a></li>
+    </ul>
+
+    <div class="container">
+        <h1>Calculation Results</h1>
+        <p class="welcome-text">View all your electricity bill calculations</p>
+        
+        <div id="result">
+            <h3>Result:</h3>
+            <table id="myTable" border="1">
+                <thead>
+                    <tr>
+                        <th>Month</th>
+                        <th>Power Consumption (kWh)</th>
+                        <th>Cost Per kWh (₱)</th>
+                        <th>Result (₱)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Rows will be inserted here via JavaScript -->
+                    <tr class="empty-row">
+                        <td colspan="4" class="empty-message">No calculations yet. <a href="calculator_page.html">Calculate your first bill</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // This page can display results stored in localStorage or from the calculator
+        // For now, it shows the table structure ready for Supabase integration
+        // When connected to Supabase, you can fetch and display all calculations here
+    </script>
+
+</body>
+</html>
+

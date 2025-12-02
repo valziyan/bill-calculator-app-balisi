@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <title>Electric Bill Calculator</title>
+</head>
+<body>
+
+    <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="user_dashboard.html">Dashboard</a></li>
+        <li><a href="calculator_page.html">Calculator</a></li>
+        <li><a href="results_page.html">Results</a></li>
+        <li><a href="profile_page.html">Profile</a></li>
+        <li><a href="login.html">Logout</a></li>
+    </ul>
+
+    <div class="container">
+        <h1>Electric Bill Calculator</h1>
+
+        <form onsubmit="event.preventDefault();">
+            <label for="month">Month:</label>
+            <input id="month" type="text" placeholder="e.g., January 2024" required /><br />
+
+            <label for="power_consumption">Power Consumption (kWh):</label>
+            <input id="power_consumption" type="number" step="0.01" placeholder="Enter power consumption" required /><br />
+
+            <label for="cost_per_kwh">Cost per kilowatt-hour (₱):</label>
+            <input id="cost_per_kwh" type="number" step="0.01" placeholder="Enter cost per kWh" required />
+
+            <br />
+            <button id="btn_calculate" type="button">Calculate</button>
+        </form>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        btn_calculate.addEventListener("click", function () {
+            let month = document.getElementById("month");
+            let power_consumption = document.getElementById("power_consumption");
+            let cost_per_kwh = document.getElementById("cost_per_kwh");
+            let result = document.getElementById("result");
+
+            // Validate inputs
+            if (!month.value || !power_consumption.value || !cost_per_kwh.value) {
+                alert("Please fill in all fields!");
+                return;
+            }
+
+            // Calculate result
+            let result_value = parseFloat(cost_per_kwh.value) * parseFloat(power_consumption.value);
+
+            // Display result message
+            result.innerHTML = `Your electric bill is: ₱ ${result_value.toFixed(2)}`;
+
+            // Get or create the results table
+            let table = document.getElementById("myTable");
+            
+            // If table doesn't exist, create it
+            if (!table) {
+                result.innerHTML += `
+                    <h3>Calculation History</h3>
+                    <table id="myTable" border="1">
+                        <thead>
+                            <tr>
+                                <th>Month</th>
+                                <th>Power Consumption (kWh)</th>
+                                <th>Cost Per kWh (₱)</th>
+                                <th>Result (₱)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                `;
+                table = document.getElementById("myTable");
+            }
+
+            // Insert new row at the first position (top of table)
+            var row = table.insertRow(1); // Insert at position 1 (after header row)
+
+            // Insert new cells with proper naming
+            var cellMonth = row.insertCell(0);
+            var cellPowerConsumption = row.insertCell(1);
+            var cellCostPerKwh = row.insertCell(2);
+            var cellResult = row.insertCell(3);
+
+            // Add data to cells
+            cellMonth.innerHTML = month.value;
+            cellPowerConsumption.innerHTML = parseFloat(power_consumption.value).toFixed(2);
+            cellCostPerKwh.innerHTML = "₱ " + parseFloat(cost_per_kwh.value).toFixed(2);
+            cellResult.innerHTML = "₱ " + result_value.toFixed(2);
+
+            // Clear form inputs
+            month.value = "";
+            power_consumption.value = "";
+            cost_per_kwh.value = "";
+        });
+    </script>
+
+</body>
+</html>
+

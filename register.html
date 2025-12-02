@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <title>Register</title>
+</head>
+<body>
+
+    <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="register.html">Register</a></li>
+        <li><a href="login.html">Login</a></li>
+    </ul>
+
+    <div class="loginform">
+        <h2>Create Account</h2>
+        <form onsubmit="event.preventDefault(); handleRegister();">
+            <label for="reg_name">Full Name</label>
+            <input type="text" id="reg_name" name="reg_name" placeholder="Your full name" required>
+
+            <label for="reg_email">Email</label>
+            <input type="email" id="reg_email" name="reg_email" placeholder="Your email" required>
+
+            <label for="reg_password">Password</label>
+            <input type="password" id="reg_password" name="reg_password" placeholder="Enter password" required>
+
+            <label for="reg_confirm_password">Confirm Password</label>
+            <input type="password" id="reg_confirm_password" name="reg_confirm_password" placeholder="Confirm password" required>
+
+            <input type="submit" value="Register">
+        </form>
+        <p class="form-footer">Already have an account? <a href="login.html">Login here</a></p>
+    </div>
+
+    <script>
+        function handleRegister() {
+            let password = document.getElementById("reg_password").value;
+            let confirmPassword = document.getElementById("reg_confirm_password").value;
+
+            if (password !== confirmPassword) {
+                alert("Passwords do not match!");
+                return;
+            }
+
+            // This will be connected to Supabase in the next phase
+            alert("Registration functionality will be connected to Supabase");
+            // For now, redirect to login
+            window.location.href = "login.html";
+        }
+    </script>
+
+</body>
+</html>
